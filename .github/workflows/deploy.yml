@@ -15,9 +15,9 @@ jobs:
         run: |
           docker run --rm \
             -v $GITHUB_WORKSPACE:/src \
-            -v /root/services/mmn-backend/app:/app \
+            -v /opt/mmn-backend/app:/app \
             alpine sh -c "cp -r /src/. /app/"
 
       - name: Deploy backend container
         run: |
-          docker compose -f /root/services/mmn-backend/docker-compose.yml up -d --force-recreate
+          docker compose -f /opt/mmn-backend/docker-compose.yml up -d --force-recreate
