@@ -13,10 +13,7 @@ jobs:
 
       - name: Copy code to app folder
         run: |
-          docker run --rm \
-            -v $GITHUB_WORKSPACE:/src \
-            -v /opt/mmn-backend/app:/app \
-            alpine sh -c "cp -r /src/. /app/"
+          cp -r $GITHUB_WORKSPACE/. /opt/mmn-backend/app/
 
       - name: Deploy backend container
         run: |
