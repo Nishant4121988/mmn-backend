@@ -14,6 +14,7 @@ jobs:
       - name: Copy code to app folder
         run: |
           cp -r $GITHUB_WORKSPACE/. /opt/mmn-backend/app/
+          rm -rf /opt/mmn-backend/app/.git
 
       - name: Deploy backend container
         run: |
