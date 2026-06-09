@@ -1,0 +1,24 @@
+name: Deploy MMN Backend
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted   # your VPS runner
+    steps:
+      - name: Pull latest code
+        run: |
+          cd ~/mmn-backend
+          git pull origin main
+
+      - name: Install dependencies
+        run: |
+          cd ~/mmn-backend
+          npm install --production
+
+      - name: Restart with pm2
+        run: |
+          pm2 restart mmn-backend || pm2 start ~/mmn-backend/server.mjs --name mmn-backend
+          pm2 save
