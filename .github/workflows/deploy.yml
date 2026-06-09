@@ -8,12 +8,16 @@ jobs:
   deploy:
     runs-on: [self-hosted, mmn-backend]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Copy code to app folder
         run: |
-          cd $GITHUB_WORKSPACE
-          cp -r . /root/services/mmn-backend/app/
+          docker run --rm \
+            -v $GITHUB_WORKSPACE:/src \
+            -v /root/services/mmn-backend/app:/app \
+            alpine sh -c "cp -r /src/. /app/"
 
       - name: Deploy backend container
         run: |
-          docker compose -f /root/services/mmn-backend/docker-compose.yml pull
           docker compose -f /root/services/mmn-backend/docker-compose.yml up -d --force-recreate
